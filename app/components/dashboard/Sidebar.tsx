@@ -9,6 +9,8 @@ export default function Sidebar() {
     sideBarMenuObject: { sideBarMenu, setSideBarMenu },
   } = useGlobalContext();
 
+  const {openSideBarObject:{openSideBar,setOpenSideBar}}= useGlobalContext();
+
   const {
     darkModeObject: { darkMode },
   } = useGlobalContext();
@@ -26,7 +28,9 @@ export default function Sidebar() {
     <>
       <aside
         id="default-sidebar"
-        className={`max-md:hidden pr-10 p-6 flex flex-col gap-2 h-screen pt-7  ${
+        className={`
+          ${openSideBar?"fixed z-50 shadow-lg":'max-md:hidden'}
+          pr-10 p-6 flex flex-col gap-2 h-screen pt-7  ${
           darkMode[1].isSelected ? "bg-slate-800" : "bg-white"
         }`}
         aria-label="Sidebar"
@@ -55,7 +59,10 @@ export default function Sidebar() {
           </div>
         </div>
       </aside>
-      <ContentArea />
+      <main className="w-full h-screen">
+      <ContentArea/>
+      </main>
+      
     </>
   );
 }

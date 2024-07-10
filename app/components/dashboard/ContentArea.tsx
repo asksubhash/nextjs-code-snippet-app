@@ -4,6 +4,8 @@ import DarkMode from "@/app/components/dashboard/DarkMode";
 import ProfileUserDetail from "@/app/my-notes/Components/ContentArea/TopBar/ProfileUserDetail";
 import SearchBar from "@/app/my-notes/Components/ContentArea/TopBar/SearchBar";
 import SideBarMenuIcon from "./SideBarMenuIcon";
+import SwiperSelection from "./NotesArea/SwiperSelection";
+import AllNoteSection from "./NotesArea/AllNoteSection";
 
 function ContentArea() {
   const {
@@ -16,6 +18,8 @@ function ContentArea() {
       } p-5`}
     >
       <TopBar />
+      <SwiperSelection/>
+      <AllNoteSection/>
     </div>
   );
 }
@@ -26,6 +30,8 @@ function TopBar() {
     darkModeObject: { darkMode },
   } = useGlobalContext();
   return (
+    <>
+   
     <div
       className={`rounded-lg flex justify-between items-center p-3
     ${darkMode[1].isSelected ? "bg-slate-800 text-white" : "bg-white"}`}
@@ -38,5 +44,6 @@ function TopBar() {
         <SideBarMenuIcon/>
       </div>
     </div>
+    </>
   );
 }

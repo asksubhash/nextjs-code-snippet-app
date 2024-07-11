@@ -12,6 +12,8 @@ export default function AllNoteSection() {
       <SingleNoteSection />
       <SingleNoteSection />
       <SingleNoteSection />
+      <SingleNoteSection />
+      <SingleNoteSection />
     </div>
   );
 }

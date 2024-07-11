@@ -9,7 +9,9 @@ export default function Sidebar() {
     sideBarMenuObject: { sideBarMenu, setSideBarMenu },
   } = useGlobalContext();
 
-  const {openSideBarObject:{openSideBar,setOpenSideBar}}= useGlobalContext();
+  const {
+    openSideBarObject: { openSideBar, setOpenSideBar },
+  } = useGlobalContext();
 
   const {
     darkModeObject: { darkMode },
@@ -26,29 +28,25 @@ export default function Sidebar() {
   }
   return (
     <>
-      <aside
-        id="default-sidebar"
-        className={`
-          ${openSideBar?"fixed z-50 shadow-lg":'max-md:hidden'}
-          pr-10 p-6 flex flex-col gap-2 h-screen pt-7  ${
-          darkMode[1].isSelected ? "bg-slate-800" : "bg-white"
-        }`}
-        aria-label="Sidebar"
-      >
-        <div>
+      <div className="flex h-screen">
+        <aside
+          className={`
+    ${openSideBar ? "fixed z-50 shadow-lg" : "max-md:hidden"}
+    pr-10 p-6 flex flex-col gap-2 h-full pt-7 ${
+      darkMode[1].isSelected ? "bg-slate-800" : "bg-white"
+    }`}
+        >
           <Logo />
-          <div className="mt-20 text-sm ">
-            <div className=" font-bold text-slate-400">Quick Links</div>
+          <div className="mt-20 text-sm flex-grow">
+            <div className="font-bold text-slate-400">Quick Links</div>
             <ul className="text-slate-400 mt-4 flex flex-col gap-2">
               {sideBarMenu.map((menu, index) => (
                 <li
                   key={index}
                   onClick={() => ClickedMenu(index)}
-                  className={`flex cursor-pointer select-none gap-2 items-center  ${
-                    menu.isSelected
-                      ? "bg-main text-white"
-                      : "text-slate-400"
-                  } p-[7px] px-2 rounded-md w-[100%]`}
+                  className={`flex cursor-pointer select-none gap-2 items-center ${
+                    menu.isSelected ? "bg-main text-white" : "text-slate-400"
+                  } p-[7px] px-2 rounded-md w-full`}
                 >
                   {menu.icon}
                   {menu.name}
@@ -57,12 +55,11 @@ export default function Sidebar() {
             </ul>
             <Languages />
           </div>
-        </div>
-      </aside>
-      <main className="w-full h-screen">
-      <ContentArea/>
-      </main>
-      
+        </aside>
+        <main className="w-full h-full overflow-auto">
+          <ContentArea />
+        </main>
+      </div>
     </>
   );
 }

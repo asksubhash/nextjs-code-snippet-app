@@ -42,7 +42,7 @@ export default function SideBar() {
               </div>
               <div className=" flex gap-1 text-[19px]">
                 <span className={`font-bold text-main `}>Snippet</span>
-                <span className="text-slate-600">Master</span>
+                <span className="text-slate-600">Store</span>
               </div>
             </div>
             {/* links  */}

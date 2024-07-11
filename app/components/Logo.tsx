@@ -9,7 +9,7 @@ export default function Logo() {
       </div>
       <div className=" flex gap-1 text-[19px]">
         <span className={`font-bold text-main `}>Snippet</span>
-        <span className="text-slate-400">Master</span>
+        <span className="text-slate-400">Store</span>
       </div>
     </div>
   );

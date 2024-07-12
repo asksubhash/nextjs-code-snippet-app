@@ -6,7 +6,6 @@ import { UserButton } from "@clerk/nextjs";
 export default async function page() {
   const { userId } = auth();
   const user = await currentUser();
-  console.log(user);
   return (
     <>
     <div className="flex h-screen bg-gray-100">

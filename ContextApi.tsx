@@ -14,6 +14,8 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import LogoutIcon from "@mui/icons-material/Logout";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+
+import{SingleNoteType,DarkModeType,SideBarMenu} from "@/app/Types";
 interface GlobalContextType {
   sideBarMenuObject: {
     sideBarMenu: SideBarMenu[];
@@ -40,28 +42,11 @@ interface GlobalContextType {
     allNotes: SingleNoteType[];
     setAllNotes: React.Dispatch<React.SetStateAction<SingleNoteType[]>>;
   };
-}
 
-interface SideBarMenu {
-  id: number;
-  name: string;
-  isSelected: boolean;
-  icon: React.ReactNode;
-}
-interface DarkModeType {
-  id: number;
-  isSelected: boolean;
-  icon: React.ReactNode;
-}
-interface SingleNoteType {
-  id: string;
-  title: string;
-  isFavorite: boolean;
-  tags: string[];
-  description: string;
-  code: string;
-  language: string;
-  creationDate: string;
+  selectedNotObject:{
+    selectedNote: SingleNoteType | null;
+    setSelectedNote: React.Dispatch<React.SetStateAction<SingleNoteType | null>>;
+  }
 }
 
 const ContextProvider = createContext<GlobalContextType>({
@@ -88,6 +73,10 @@ const ContextProvider = createContext<GlobalContextType>({
   allNotesObject: {
     allNotes: [],
     setAllNotes: () => {},
+  },
+  selectedNotObject: {
+    selectedNote: null,
+    setSelectedNote: () => {},
   },
 });
 
@@ -129,9 +118,10 @@ export default function GlobalContextProvider({
   ]);
 
   const [openSideBar, setOpenSideBar] = useState(false);
-  const [openContentNote, setOpenContentNote] = useState(true);
-  const [isMobile, setIsMobile] = useState(true);
+  const [openContentNote, setOpenContentNote] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [allNotes, setAllNotes] = useState<SingleNoteType[]>([]);
+  const [selectedNote, setSelectedNote] = useState<SingleNoteType | null>(null);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 600);
@@ -153,7 +143,7 @@ export default function GlobalContextProvider({
           description: "This is a sample note.",
           code: `import React from 'react'; 
       const App = () => {\n  return (\n    <div>Hello World!</div>\n  );\n};`,
-          language: "JavaScript",
+          language: "javascript",
           creationDate: new Date().toISOString(),
         },
         {
@@ -171,7 +161,7 @@ export default function GlobalContextProvider({
       export default firstNote;
       }
       `,
-          language: "JavaScript",
+          language: "javascript",
           creationDate: "2024-03-01",
         },
         {
@@ -181,7 +171,7 @@ export default function GlobalContextProvider({
           tags: ["JavaScript", "React"],
           description: "This is a sample note.",
           code: "const App = () => {\n  return (\n    <div>Hello World!</div>\n  );\n};",
-          language: "JavaScript",
+          language: "javascript",
           creationDate: new Date().toISOString(),
         },
         {
@@ -191,7 +181,7 @@ export default function GlobalContextProvider({
           tags: ["JavaScript", "React"],
           description: "This is a sample note.",
           code: "const App = () => {\n  return (\n    <div>Hello World!</div>\n  );\n};",
-          language: "JavaScript",
+          language: "javascript",
           creationDate: new Date().toISOString(),
         },
       ];
@@ -213,6 +203,7 @@ export default function GlobalContextProvider({
         openContentNoteObject: { openContentNote, setOpenContentNote },
         isMobileObject: { isMobile, setIsMobile },
         allNotesObject: { allNotes, setAllNotes },
+        selectedNotObject: { selectedNote, setSelectedNote },
       }}
     >
       {children}

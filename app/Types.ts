@@ -1,15 +1,15 @@
-interface SideBarMenu {
+export interface SideBarMenu {
   id: number;
   name: string;
   isSelected: boolean;
   icon: React.ReactNode;
 }
-interface DarkModeType {
+export interface DarkModeType {
   id: number;
   isSelected: boolean;
   icon: React.ReactNode;
 }
-interface SingleNoteType {
+export interface SingleNoteType {
   id: string;
   title:string;
   isFavorite:boolean;

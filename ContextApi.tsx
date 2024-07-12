@@ -55,13 +55,13 @@ interface DarkModeType {
 }
 interface SingleNoteType {
   id: string;
-  title:string;
-  isFavorite:boolean;
-  tags:string[];
-  description:string;
-  code:string;
-  language:string;
-  creationDate:string;
+  title: string;
+  isFavorite: boolean;
+  tags: string[];
+  description: string;
+  code: string;
+  language: string;
+  creationDate: string;
 }
 
 const ContextProvider = createContext<GlobalContextType>({
@@ -131,7 +131,7 @@ export default function GlobalContextProvider({
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openContentNote, setOpenContentNote] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
-  const [allNotes, setAllNotes] = useState<SingleNoteType[]>({});
+  const [allNotes, setAllNotes] = useState<SingleNoteType[]>([]);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 600);
@@ -141,6 +141,69 @@ export default function GlobalContextProvider({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    function updateAllNotes() {
+      const allNotes = [
+        {
+          id: "1",
+          title: "Sample Note",
+          isFavorite: false,
+          tags: ["JavaScript", "React"],
+          description: "This is a sample note.",
+          code: `import React from 'react'; 
+      const App = () => {\n  return (\n    <div>Hello World!</div>\n  );\n};`,
+          language: "JavaScript",
+          creationDate: new Date().toISOString(),
+        },
+        {
+          id: "2",
+          title: "This is a note",
+          isFavorite: true,
+          tags: ["Tag1", "Tag2"],
+          description: "This is a sample a note.",
+          code: `import React from 'react';
+      
+      function firstNote(){
+      return (
+        <div>This is a first note.</div>
+      );
+      export default firstNote;
+      }
+      `,
+          language: "JavaScript",
+          creationDate: "2024-03-01",
+        },
+        {
+          id: "3",
+          title: "Sample Note",
+          isFavorite: false,
+          tags: ["JavaScript", "React"],
+          description: "This is a sample note.",
+          code: "const App = () => {\n  return (\n    <div>Hello World!</div>\n  );\n};",
+          language: "JavaScript",
+          creationDate: new Date().toISOString(),
+        },
+        {
+          id: "4",
+          title: "Sample Note",
+          isFavorite: false,
+          tags: ["JavaScript", "React"],
+          description: "This is a sample note.",
+          code: "const App = () => {\n  return (\n    <div>Hello World!</div>\n  );\n};",
+          language: "JavaScript",
+          creationDate: new Date().toISOString(),
+        },
+      ];
+
+      setTimeout(() => {
+        setAllNotes(allNotes);
+      }, 1000);
+    }
+
+    updateAllNotes();
+  }, []);
+
   return (
     <ContextProvider.Provider
       value={{

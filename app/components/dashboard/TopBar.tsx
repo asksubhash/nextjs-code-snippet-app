@@ -1,14 +1,25 @@
 import React from "react";
 import HeaderUserDetail from "./HeaderUserDetail";
 import HeaderSearchBar from "./HeaderSearchBar";
+import { useGlobalContext } from "@/ContextApi";
+import DarkMode from "./DarkMode";
+import SideBarMenuIcon from "./SideBarMenuIcon";
 
 export default function TopBar() {
+  const {
+    darkModeObject: { darkMode },
+  } = useGlobalContext();
   return (
-      <div className="w-[80%] bg-slate-100 p-5">
-        <div className=" rounded-lg flex justify-between items-center bg-white p-3">
-          <HeaderUserDetail/>
-          <HeaderSearchBar/>
-        </div>
+    <div
+      className={`rounded-lg flex justify-between items-center p-3
+        ${darkMode[1].isSelected ? "bg-slate-800 text-white" : "bg-white"}`}
+    >
+      <HeaderUserDetail />
+      <HeaderSearchBar />
+      <div className=" flex gap-4 items-center">
+        <DarkMode />
+        <SideBarMenuIcon />
       </div>
+    </div>
   );
 }

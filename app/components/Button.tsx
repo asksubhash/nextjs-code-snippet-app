@@ -7,7 +7,7 @@ export default function Button() {
   return (
     <div className=" max-sm:w-full">
       {userId ? (
-        <Link href="/my-notes">
+        <Link href="/dashboard">
          <button className="max-sm:w-full bg-main p-[8px] px-6 text-sm text-white rounded-md">
           Access To The App
          </button>

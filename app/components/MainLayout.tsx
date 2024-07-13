@@ -8,26 +8,8 @@ import ContentArea from "./dashboard/ContentArea";
 
 export default function MainLayout() {
   const {
-    sideBarMenuObject: { sideBarMenu, setSideBarMenu },
-  } = useGlobalContext();
-
-  const {
-    openSideBarObject: { openSideBar, setOpenSideBar },
-  } = useGlobalContext();
-
-  const {
     darkModeObject: { darkMode },
   } = useGlobalContext();
-  function ClickedMenu(index: number) {
-    const updateSideBarMenu = sideBarMenu.map((menu, i) => {
-      if (i === index) {
-        return { ...menu, isSelected: true };
-      } else {
-        return { ...menu, isSelected: false };
-      }
-    });
-    setSideBarMenu(updateSideBarMenu);
-  }
 
   return (
     <>

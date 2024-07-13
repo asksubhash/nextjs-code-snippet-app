@@ -13,7 +13,6 @@ export default function AllNoteSection() {
         <div key={index}>
         <SingleNoteSection note={note} />
         </div>
-       
       ))}
     </div>
   );

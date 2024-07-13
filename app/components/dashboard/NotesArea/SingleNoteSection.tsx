@@ -13,10 +13,7 @@ export default function SingleNoteSection({note}:{note:SingleNoteType}) {
     darkModeObject: { darkMode },
     openContentNoteObject:{openContentNote}
   } = useGlobalContext();
-  
   const {title,creationDate,description,isFavorite,tags,code,language}=note;
-  console.log(title);
-  
   return (
     <div
       className={`${
@@ -24,7 +21,7 @@ export default function SingleNoteSection({note}:{note:SingleNoteType}) {
       } max-sm:w-full  rounded-md py-4  mt-2 shadow-sm hover:shadow-lg`}
     >
 
-      <NoteHeader title={title} isFavorite={isFavorite}/>
+      <NoteHeader note={note}/>
       <NoteDate creationDate={creationDate}/>
       <NoteTags tags={tags}/>
       <NoteDescription description={description} />

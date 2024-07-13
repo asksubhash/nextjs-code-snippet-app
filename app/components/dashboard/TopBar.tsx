@@ -16,9 +16,11 @@ export default function TopBar() {
     >
       <HeaderUserDetail />
       <HeaderSearchBar />
-      <div className=" flex gap-4 items-center">
+      <div className=" flex gap-3 items-center">
         <DarkMode />
-        <SideBarMenuIcon />
+        <div className="hidden max-md:block">
+          <SideBarMenuIcon />
+        </div>
       </div>
     </div>
   );

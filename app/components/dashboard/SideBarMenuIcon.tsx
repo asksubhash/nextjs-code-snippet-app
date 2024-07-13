@@ -6,21 +6,18 @@ export default function SideBarMenuIcon() {
   const {
     openSideBarObject: { openSideBar,setOpenSideBar },
   } = useGlobalContext();
-  const {
-    sideBarMenuObject: { sideBarMenu, setSideBarMenu },
-  } = useGlobalContext();
 
   return (
 
     <>
     {!openSideBar?(
-       <MenuOutlinedIcon sx={{fontSize:18}}
+       <MenuOutlinedIcon sx={{fontSize:23}}
        onClick={()=>setOpenSideBar(!openSideBar)}
-       className='text-slate-500  cursor-pointer hidden max-md:block '/>
+       className='text-slate-500  cursor-pointer'/>
     ):(
-       <CloseOutlinedIcon sx={{fontSize:18}}  
+       <CloseOutlinedIcon sx={{fontSize:23}}  
        onClick={()=>setOpenSideBar(!openSideBar)}
-       className='text-slate-500  cursor-pointer hidden max-md:block'/>
+       className='text-slate-500  cursor-pointer'/>
     )}
     
     </>

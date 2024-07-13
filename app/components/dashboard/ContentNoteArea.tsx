@@ -1,42 +1,33 @@
 import { useGlobalContext } from "@/ContextApi";
 import React, { useEffect, useState } from "react";
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { SingleNoteType } from "@/app/Types";
 
 function ContentNoteArea() {
   const {
     openContentNoteObject: { openContentNote, setOpenContentNote },
-    isMobileObject: { isMobile, setIsMobile },
-    selectedNotObject: { selectedNote, setSelectedNote }
+    isMobileObject: { isMobile },
+    selectedNotObject: { selectedNote },
+    isNewNoteObject: { isNewNote, setIsNewNote },
+    allNotesObject: { allNotes, setAllNotes },
   } = useGlobalContext();
 
-  const [singleNote, setSingleNote] = useState<SingleNoteType | undefined>(undefined);
- 
+  const [singleNote, setSingleNote] = useState<SingleNoteType | undefined>(
+    undefined
+  );
+
   useEffect(() => {
-
-    if(openContentNote){
-      if(selectedNote){
-        setSingleNote(selectedNote);
-      }
+    if (openContentNote && selectedNote) {
+      setSingleNote(selectedNote);
     }
-
-    // if (openContentNote && selectedNote) {
-    //   setSingleNote(selectedNote);
-    // }
-    
-    // else {
-    //   setSingleNote({
-    //     id: "string",
-    //     title: "string",
-    //     isFavorite: false,
-    //     tags: ['hello', 'ss'],
-    //     description: "SS",
-    //     code: "SS",
-    //     language: "SS",
-    //     creationDate: "string"
-    //   });
-    // }
   }, [openContentNote, selectedNote]);
+
+  useEffect(() => {
+    if (isNewNote && singleNote && singleNote.title !== "") {
+      setAllNotes([...allNotes, singleNote]);
+      setIsNewNote(false);
+    }
+  }, [isNewNote, singleNote, allNotes, setAllNotes, setIsNewNote]);
 
   return (
     <div
@@ -47,11 +38,12 @@ function ContentNoteArea() {
       h-[700px] relative p-4 w-full max-w-2xl max-h-full`}
     >
       <div className="flex items-center justify-between p-4 md:p-1 border-b rounded-t dark:border-gray-600">
-        {/* <h3 className="text-xl font-semibold text-gray-900"> */}
-          {singleNote && (
-            <ContentNoteHeader singleNote={singleNote} setSingleNote={setSingleNote} />
-          )}
-        {/* </h3> */}
+        {singleNote && (
+          <ContentNoteHeader
+            singleNote={singleNote}
+            setSingleNote={setSingleNote}
+          />
+        )}
         <button
           className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm py-1 px-2 text-center"
           onClick={() => setOpenContentNote(false)}
@@ -65,31 +57,45 @@ function ContentNoteArea() {
 
 export default ContentNoteArea;
 
-const ContentNoteHeader: React.FC<{
+function ContentNoteHeader({
+  singleNote,
+  setSingleNote,
+}: {
   singleNote: SingleNoteType;
-  setSingleNote: React.Dispatch<React.SetStateAction<SingleNoteType | undefined>>;
-}> = ({ singleNote, setSingleNote }) => {
+  setSingleNote: React.Dispatch<
+    React.SetStateAction<SingleNoteType | undefined>
+  >;
+}) {
   const {
-    allNotesObject: { allNotes,setAllNotes }
+    allNotesObject: { allNotes, setAllNotes },
   } = useGlobalContext();
 
-  function onUpdateTitle(event:React.ChangeEvent<HTMLInputElement>){
-    const newSingleNote={...singleNote,title:event.target.value}
-    setSingleNote(newSingleNote);
+  function onUpdateTitle(event: React.ChangeEvent<HTMLInputElement>) {
+    const updatedSingleNote = { ...singleNote, title: event.target.value };
+    setSingleNote(updatedSingleNote);
 
-    const newAllNotes=allNotes.map((note)=>{
-      // if(note._id==singleNote._id) return singleNote;
-      return singleNote;
-    });
-    setAllNotes(newAllNotes);
+    const updatedAllNotes = allNotes.map((note) => 
+      note.id === singleNote.id ? updatedSingleNote : note
+    );
+    setAllNotes(updatedAllNotes);
   }
 
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+    if (event.key === "Escape") {
+      setSingleNote(undefined);
+    }
+  }
 
-
-  // Example JSX for the header
   return (
-   <input type="text" placeholder="New Title..."
-   value={singleNote.title}
-   onChange={onUpdateTitle} />
+    <input
+      placeholder="New Title..."
+      value={singleNote.title}
+      onChange={onUpdateTitle}
+      onKeyDown={handleKeyDown}
+      className="bg-slate-100 w-[70%] rounded-md border-0 focus:border-0 focus:outline-none focus:shadow-none text-sm text-slate-500"
+    />
   );
-};
+}

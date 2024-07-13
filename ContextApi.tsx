@@ -46,7 +46,11 @@ interface GlobalContextType {
   selectedNotObject:{
     selectedNote: SingleNoteType | null;
     setSelectedNote: React.Dispatch<React.SetStateAction<SingleNoteType | null>>;
-  }
+  };
+  isNewNoteObject: {
+    isNewNote: boolean;
+    setIsNewNote: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 }
 
 const ContextProvider = createContext<GlobalContextType>({
@@ -77,6 +81,10 @@ const ContextProvider = createContext<GlobalContextType>({
   selectedNotObject: {
     selectedNote: null,
     setSelectedNote: () => {},
+  },
+  isNewNoteObject: {
+    isNewNote: false,
+    setIsNewNote: () => {},
   },
 });
 
@@ -122,6 +130,7 @@ export default function GlobalContextProvider({
   const [isMobile, setIsMobile] = useState(false);
   const [allNotes, setAllNotes] = useState<SingleNoteType[]>([]);
   const [selectedNote, setSelectedNote] = useState<SingleNoteType | null>(null);
+  const [isNewNote, setIsNewNote] = useState(false);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 600);
@@ -204,6 +213,7 @@ export default function GlobalContextProvider({
         isMobileObject: { isMobile, setIsMobile },
         allNotesObject: { allNotes, setAllNotes },
         selectedNotObject: { selectedNote, setSelectedNote },
+        isNewNoteObject: { isNewNote, setIsNewNote },
       }}
     >
       {children}
